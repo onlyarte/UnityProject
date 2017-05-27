@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
+
     public static LevelController current;
     void Awake()
     {
         current = this;
     }
 
-    Vector3 startingPosition;
+    Vector3 startPosition;
+
     public void setStartPosition(Vector3 pos)
     {
-        this.startingPosition = pos;
+        this.startPosition = pos;
     }
 
     public void onRabitDeath(HeroRabit rabit)
     {
-        //При смерті кролика повертаємо на початкову позицію
-        rabit.transform.position = this.startingPosition;
+        rabit.transform.position = this.startPosition;
+    }
+
+    public void addCoins(int number)
+    {
+        Debug.Log("coins collected " + number);
     }
 }
