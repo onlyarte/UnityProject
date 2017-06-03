@@ -6,7 +6,8 @@ public class Orc2BattleController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        HeroRabit.current.removeHealth(1);
+        if(Orc2.current != null)
+            Orc2.current.removeHealth(1);
     }
 
     void OnTriggerStay2D(Collider2D collider)

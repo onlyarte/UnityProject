@@ -34,7 +34,7 @@ public class Carrot : Collectable {
 	// Update is called once per frame
 	void Update () {
         Vector3 pos = this.transform.position;
-        pos.x += Time.deltaTime + my_direction * Speed;
+        pos.x += Time.deltaTime + my_direction*0.1f;
         this.transform.position = pos;
 	}
 }

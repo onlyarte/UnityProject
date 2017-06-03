@@ -70,11 +70,10 @@ public class HeroRabit : MonoBehaviour {
 
     IEnumerator rabitDie()
     {
-        Debug.Log("rabdie");
         this.myController.SetBool("die", true);
         yield return new WaitForSeconds(4);
-        LevelController.current.onRabitDeath(this);
         this.myController.SetBool("die", false);
+        LevelController.current.onRabitDeath(this);
     }
 
     public bool isDead()
