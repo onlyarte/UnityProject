@@ -18,31 +18,21 @@ public class HeroRabit : MonoBehaviour {
     public float MaxJumpTime = 0f;
     public float JumpSpeed = 0f;
 
-    Transform rabbitParent = null;
-
-    public int health = 2;
+    public int health = 1;
     public int MaxHealth = 2;
-    
-    bool isSuper = false;
-    bool colidedBomb = false;
 
-    public float WaitTime = 2f;
-    float to_wait = 0f;
-
-    /*private Vector3 scale_speed;
-    private Vector3 targetScale;*/
+    Vector3 targetScale = Vector3.one;
+    Vector3 scale_speed = Vector3.one;
 
     void Awake()
     {
         current = this;
-        to_wait = WaitTime;
     }
 
     void Start()
     {
         myBody = this.GetComponent<Rigidbody2D>();
         myController = this.GetComponent<Animator>();
-        rabbitParent = this.transform.parent;
         LevelController.current.setStartPosition(this.transform.position);
     }
 
@@ -66,44 +56,37 @@ public class HeroRabit : MonoBehaviour {
     {
         if (this.health == 1)
         {
-            this.transform.localScale = Vector3.one;
+            targetScale = Vector3.one;
         }
         else if (this.health == 2)
         {
-            this.transform.localScale = Vector3.one * 2;
+            targetScale = Vector3.one + new Vector3(0.5F, 0.5f, 0);
         }
         else if (this.health == 0)
         {
-            LevelController.current.onRabitDeath(this);
+            StartCoroutine(rabitDie());
         }
     }
 
-    public void becomeSuper()
+    IEnumerator rabitDie()
     {
-        if (!isSuper)
-        {
-            isSuper = true;
-            transform.localScale += new Vector3(0.5F, 0.5f, 0);
-        }
+        Debug.Log("rabdie");
+        this.myController.SetBool("die", true);
+        yield return new WaitForSeconds(4);
+        LevelController.current.onRabitDeath(this);
+        this.myController.SetBool("die", false);
     }
 
-    public void colideBomb()
+    public bool isDead()
     {
-        Animator animator = GetComponent<Animator>();
-        if (isSuper)
-        {
-            isSuper = false;
-            transform.localScale += new Vector3(-0.5F, -0.5f, 0);
-        }
-        else
-        {
-            colidedBomb = true;
-            animator.SetBool("dead", true);
-        }
+        return this.myController.GetBool("die");
     }
 
     void FixedUpdate()
     {
+        if (this.isDead())
+            return;
+
         //[-1, 1]
         float value = Input.GetAxis("Horizontal");
         Animator animator = GetComponent<Animator>();
@@ -118,7 +101,7 @@ public class HeroRabit : MonoBehaviour {
             animator.SetBool("run", false);
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (value < 0)
+        if (value < 0 && !animator.GetBool("die"))
             sr.flipX = true;
         else if (value > 0)
             sr.flipX = false;
@@ -187,19 +170,7 @@ public class HeroRabit : MonoBehaviour {
         {
             animator.SetBool("jump", true);
         }
-        
-        if (colidedBomb)
-        {
-            to_wait -= Time.deltaTime;
-            if(to_wait <= 0)
-            {
-                colidedBomb = false;
-                animator.SetBool("dead", false);
-                LevelController.current.onRabitDeath(this);
-                to_wait = WaitTime;
-            }
-        }
 
-        //this.transform.localScale = Vector3.SmoothDamp(this.transform.localScale, this.targetScale, ref scale_speed, 1.0f);
+        this.transform.localScale = Vector3.SmoothDamp(this.transform.localScale, this.targetScale, ref scale_speed, 1.0f);
     }
 }

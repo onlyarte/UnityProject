@@ -7,6 +7,7 @@ public class MovingPlatform : MonoBehaviour {
     //class MovingPlatform
     public Vector3 MoveBy;
     public float Speed = 2f;
+
     public float WaitTime = 0.5f;
 
     Vector3 pointA;

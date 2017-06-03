@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61957808319431086}
   - component: {fileID: 114522137532088080}
   - component: {fileID: 95858019067887014}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rabit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,8 +120,9 @@ MonoBehaviour:
   speed: 3
   MaxJumpTime: 2
   JumpSpeed: 2
-  health: 2
+  health: 1
   MaxHealth: 2
+  isDead: 0
 --- !u!212 &212666755957599350
 SpriteRenderer:
   m_ObjectHideFlags: 1

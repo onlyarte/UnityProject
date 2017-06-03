@@ -6,7 +6,7 @@ public class Mushroom : Collectable {
 
     public override void onRabbitEnter(HeroRabit rabit)
     {
-        HeroRabit.current.becomeSuper();
+        HeroRabit.current.addHealth(1);
         this.hideCollectable();
     }
 }

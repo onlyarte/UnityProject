@@ -6,7 +6,7 @@ public class Bomb : Collectable {
 
     public override void onRabbitEnter(HeroRabit rabit)
     {
+        HeroRabit.current.removeHealth(1);
         this.hideCollectable();
-        HeroRabit.current.colideBomb();
     }
 }
