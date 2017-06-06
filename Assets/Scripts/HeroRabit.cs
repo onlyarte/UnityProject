@@ -168,6 +168,7 @@ public class HeroRabit : MonoBehaviour {
         else
         {
             animator.SetBool("jump", true);
+            animator.SetBool("run", false);
         }
 
         this.transform.localScale = Vector3.SmoothDamp(this.transform.localScale, this.targetScale, ref scale_speed, 1.0f);
