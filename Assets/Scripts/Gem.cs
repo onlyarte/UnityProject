@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Gem : Collectable {
 
+    public GemPanel.Color color;
+
     public override void onRabbitEnter(HeroRabit rabit)
     {
-        //rabit.addHealth(1);
+        LevelController.current.addGem(color);
         this.hideCollectable();
     }
 }

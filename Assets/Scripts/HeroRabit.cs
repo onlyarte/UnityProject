@@ -6,6 +6,11 @@ public class HeroRabit : MonoBehaviour {
 
     public static HeroRabit current;
 
+    public LivesPanel livesPanel;
+    public GemPanel gemsPanel;
+    public UILabel coinsLabel;
+    public UILabel fruitsLabel;
+
     Rigidbody2D myBody = null;
     Animator myController = null;
 
@@ -20,6 +25,9 @@ public class HeroRabit : MonoBehaviour {
 
     public int health = 1;
     public int MaxHealth = 2;
+    int lives = 3;
+
+    public int coins = 0;
 
     Vector3 targetScale = Vector3.one;
     Vector3 scale_speed = Vector3.one;
@@ -34,10 +42,15 @@ public class HeroRabit : MonoBehaviour {
         myBody = this.GetComponent<Rigidbody2D>();
         myController = this.GetComponent<Animator>();
         LevelController.current.setStartPosition(this.transform.position);
+        if(livesPanel != null)
+            livesPanel.setLivesQuantity(lives);
+        if (coinsLabel != null)
+            LevelController.current.updateCoins();
     }
 
     public void addHealth(int number)
     {
+        Debug.Log("health added");
         this.health += number;
         if (this.health > MaxHealth)
             this.health = MaxHealth;
@@ -50,6 +63,13 @@ public class HeroRabit : MonoBehaviour {
         if (this.health < 0)
             this.health = 0;
         this.onHealthChange();
+    }
+
+    public void resetHealth()
+    {
+        livesPanel.setLivesQuantity(--lives);
+        this.health = 1; onHealthChange();
+        LevelController.current.onRabitDeath(this);
     }
 
     void onHealthChange()
@@ -65,6 +85,7 @@ public class HeroRabit : MonoBehaviour {
         else if (this.health == 0)
         {
             StartCoroutine(rabitDie());
+            livesPanel.setLivesQuantity(--lives);
         }
     }
 
@@ -74,6 +95,7 @@ public class HeroRabit : MonoBehaviour {
         yield return new WaitForSeconds(4);
         this.myController.SetBool("die", false);
         LevelController.current.onRabitDeath(this);
+        this.health = 1; onHealthChange();
     }
 
     public bool isDead()

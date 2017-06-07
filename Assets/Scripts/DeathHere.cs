@@ -9,7 +9,7 @@ public class DeathHere : MonoBehaviour
         HeroRabit rabit = collider.GetComponent<HeroRabit>();
         if (rabit != null)
         {
-            LevelController.current.onRabitDeath(rabit);
+            rabit.resetHealth();
         }
     }
 }

@@ -6,7 +6,7 @@ public class Orc2BattleController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(Orc2.current != null)
+        if(Orc2.current != null && collider.gameObject.layer == 11)
             Orc2.current.removeHealth(1);
     }
 

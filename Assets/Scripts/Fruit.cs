@@ -6,7 +6,7 @@ public class Fruit : Collectable {
 
     public override void onRabbitEnter(HeroRabit rabit)
     {
-        //rabit.addHealth(1);
+        LevelController.current.addFruits(1);
         this.hideCollectable();
     }
 }

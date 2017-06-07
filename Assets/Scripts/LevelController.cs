@@ -6,6 +6,9 @@ public class LevelController : MonoBehaviour
 {
 
     public static LevelController current;
+    public static int coins = 0;
+    public int fruits = 0;
+
     void Awake()
     {
         current = this;
@@ -25,6 +28,25 @@ public class LevelController : MonoBehaviour
 
     public void addCoins(int number)
     {
-        Debug.Log("coins collected " + number);
+        coins += number;
+        updateCoins();
+    }
+
+    public void updateCoins()
+    {
+        string s = coins.ToString();
+        s = s.PadLeft(4, '0');
+        HeroRabit.current.coinsLabel.text = s;
+    }
+
+    public void addFruits(int number)
+    {
+        fruits += number;
+        HeroRabit.current.fruitsLabel.text = fruits.ToString() + "/12";
+    }
+
+    public void addGem(GemPanel.Color color)
+    {
+        HeroRabit.current.gemsPanel.addGem(color);
     }
 }
