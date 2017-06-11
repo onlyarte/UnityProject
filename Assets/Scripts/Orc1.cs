@@ -6,6 +6,8 @@ using UnityEngine;
 public class Orc1 : MonoBehaviour
 {
     public static Orc1 current;
+    public AudioClip attackSound = null;
+    AudioSource attackSource = null;
 
     public enum Mode
     {
@@ -63,6 +65,8 @@ public class Orc1 : MonoBehaviour
 
     public void showAttack()
     {
+        if (SoundManager.Instance.isSoundOn())
+            attackSource.Play();
         this.myController.SetTrigger("attack");
     }
 
@@ -145,7 +149,8 @@ public class Orc1 : MonoBehaviour
         myController = this.GetComponent<Animator>();
         LevelController.current.setStartPosition(this.transform.position);
 
-        //TO CHECK
+        attackSource = gameObject.AddComponent<AudioSource>();
+        attackSource.clip = attackSound;
     }
 
     void FixedUpdate()

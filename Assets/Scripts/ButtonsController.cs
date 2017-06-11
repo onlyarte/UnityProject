@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,9 +8,8 @@ public class ButtonsController : MonoBehaviour {
 
     public MyButton menuPlayButton;
     public MyButton settingsButton;
-    public MyButton settingsCloseButton;
-    public MyButton settingsCloseBackground;
-    public MyButton soundButton;
+
+    public GameObject settingsPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -17,31 +17,17 @@ public class ButtonsController : MonoBehaviour {
             menuPlayButton.signalOnClick.AddListener(this.onPlay);
         if (settingsButton != null)
             settingsButton.signalOnClick.AddListener(this.onSettings);
-        if (settingsCloseButton != null)
-            settingsCloseButton.signalOnClick.AddListener(this.onSettingsClose);
-        if (settingsCloseBackground != null)
-            settingsCloseBackground.signalOnClick.AddListener(this.onSettingsClose);
-        if (soundButton != null)
-            soundButton.signalOnClick.AddListener(this.onSound);
-	}
-	
-	void onPlay()
+    }
+
+    void onPlay()
     {
         SceneManager.LoadScene("ChoseLevel");
     }
 
     void onSettings()
     {
-
+        GameObject parent = UICamera.first.transform.parent.gameObject;
+        GameObject obj = NGUITools.AddChild(parent, settingsPrefab);
     }
 
-    void onSettingsClose()
-    {
-
-    }
-
-    void onSound()
-    {
-
-    }
 }

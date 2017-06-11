@@ -9,6 +9,7 @@ public class Orc1BattleController : MonoBehaviour {
         if (this.gameObject.layer == 13 && Orc1.current != null 
             && !Orc1.current.isDead() && !HeroRabit.current.isDead())
         {
+            Debug.Log("attack");
             Orc1.current.showAttack();
             HeroRabit.current.removeHealth(1);
         }

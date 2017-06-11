@@ -6,12 +6,13 @@ public class LevelController : MonoBehaviour
 {
 
     public static LevelController current;
-    public static int coins = 0;
+    public static int coins;
     public int fruits = 0;
 
     void Awake()
     {
         current = this;
+        coins = PlayerPrefs.GetInt("coins", 0);
     }
 
     Vector3 startPosition;
@@ -39,9 +40,10 @@ public class LevelController : MonoBehaviour
         HeroRabit.current.coinsLabel.text = s;
     }
 
-    public void addFruits(int number)
+    public void addFruits(Fruit.FruitType type)
     {
-        fruits += number;
+        fruits++;
+        HeroRabit.current.currentStat.collectedFruits[(int)type]++;
         HeroRabit.current.fruitsLabel.text = fruits.ToString() + "/12";
     }
 

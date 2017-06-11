@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61957808319431086}
   - component: {fileID: 114522137532088080}
   - component: {fileID: 95858019067887014}
+  - component: {fileID: 114293681809138816}
   m_Layer: 11
   m_Name: Rabit
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114293681809138816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1141698813229440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434e714193d1cb2429ba2e98ba8e2380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruits: 0
 --- !u!114 &114522137532088080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,12 +130,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89581237045475747a623b1e837db14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  livesPanel: {fileID: 0}
+  gemsPanel: {fileID: 0}
+  coinsLabel: {fileID: 0}
+  fruitsLabel: {fileID: 0}
   speed: 3
   MaxJumpTime: 2
   JumpSpeed: 2
   health: 1
   MaxHealth: 2
-  isDead: 0
+  coins: 0
+  runSound: {fileID: 8300000, guid: 0d024189a711c440997b2d9f341c8dd0, type: 3}
+  dieSound: {fileID: 8300000, guid: 7553580dee44e4f96b2efa5f4e5e17c3, type: 3}
+  groundSound: {fileID: 8300000, guid: 4678dc960a2b949329a55d696cf4ec68, type: 3}
+  backgroundSound: {fileID: 8300000, guid: 57a5b2120c2d04fa9bcb5b2e99ee9361, type: 3}
 --- !u!212 &212666755957599350
 SpriteRenderer:
   m_ObjectHideFlags: 1

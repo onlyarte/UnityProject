@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b664a1eb5942ae438563fb42d46fcc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
   speed: 2
   PatrolDistance: 6
 --- !u!114 &114931958491503080

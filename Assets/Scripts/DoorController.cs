@@ -5,14 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour {
 
-    public int DoorNumber;
+    public static DoorController current;
+
+    public int doorNumber = 0;
+    public int level = 0;
+
+    public GameObject winPrefab;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
         HeroRabit rabit = collider.GetComponent<HeroRabit>();
         if (rabit != null)
         {
-            SceneManager.LoadScene("Level"+DoorNumber);
+            if(doorNumber != 0)
+                SceneManager.LoadScene("Level" + doorNumber);
+            else if(level != 0)
+            {
+                current = this;
+                GameObject parent = UICamera.first.transform.parent.gameObject;
+                GameObject obj = NGUITools.AddChild(parent, winPrefab);
+            }
         }
     }
 }

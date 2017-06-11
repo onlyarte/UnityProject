@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61081881005809292}
   - component: {fileID: 114237580327294590}
   - component: {fileID: 114234820673296150}
+  - component: {fileID: 114051592224980706}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -68,6 +69,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 400, y: 400}
   m_EdgeRadius: 0
+--- !u!114 &114051592224980706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329236818810802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcaecb8cdb836347a729436500a7610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsCloseButton: {fileID: 0}
+  settingsCloseBackground: {fileID: 0}
+  soundButton: {fileID: 0}
+  musicButton: {fileID: 0}
 --- !u!114 &114234820673296150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,7 +124,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 0}
+    mMethodName: _onClick
+    mParameters: []
+    oneShot: 0
 --- !u!114 &114505744352285104
 MonoBehaviour:
   m_ObjectHideFlags: 1

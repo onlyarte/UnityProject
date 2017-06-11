@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212150937591856154}
   - component: {fileID: 114320423163455210}
   - component: {fileID: 61101832172704736}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: fruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b2413fe2a9a934ab565d2b81ee0fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!212 &212150937591856154
 SpriteRenderer:
   m_ObjectHideFlags: 1

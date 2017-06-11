@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212903470999023876}
   - component: {fileID: 114704450975050464}
   - component: {fileID: 61848006491567118}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0b94a520a546943beb311c9f9c7ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
 --- !u!212 &212903470999023876
 SpriteRenderer:
   m_ObjectHideFlags: 1

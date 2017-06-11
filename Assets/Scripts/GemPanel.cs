@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GemPanel : MonoBehaviour {
 
+    public static GemPanel current;
+
 	public enum Color
     {
         Blue=0,
@@ -20,6 +22,7 @@ public class GemPanel : MonoBehaviour {
 
     void Start()
     {
+        current = this;
         for (int i = 0; i < 3; ++i)
             gems[i].sprite2D = this.gemEmpty;
     }
@@ -32,5 +35,9 @@ public class GemPanel : MonoBehaviour {
             map[color] = true;
             gems[map.Count - 1].sprite2D = gemColorful[(int)color];
         }
+        if (map.ContainsKey(Color.Blue) && map[Color.Blue] 
+            && map.ContainsKey(Color.Green) && map[Color.Green]
+            && map.ContainsKey(Color.Red) && map[Color.Red])
+            HeroRabit.current.currentStat.hasGems = true;
     }
 }

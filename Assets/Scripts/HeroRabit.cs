@@ -11,6 +11,8 @@ public class HeroRabit : MonoBehaviour {
     public UILabel coinsLabel;
     public UILabel fruitsLabel;
 
+    public LevelStat currentStat;
+
     Rigidbody2D myBody = null;
     Animator myController = null;
 
@@ -32,6 +34,17 @@ public class HeroRabit : MonoBehaviour {
     Vector3 targetScale = Vector3.one;
     Vector3 scale_speed = Vector3.one;
 
+    public AudioClip runSound = null;
+    AudioSource runSource = null;
+    public AudioClip dieSound = null;
+    AudioSource dieSource = null;
+    public AudioClip groundSound = null;
+    AudioSource groundSource = null;
+    public AudioClip backgroundSound = null;
+    AudioSource backgroundSource = null;
+
+    public bool locked = false;
+
     void Awake()
     {
         current = this;
@@ -46,6 +59,32 @@ public class HeroRabit : MonoBehaviour {
             livesPanel.setLivesQuantity(lives);
         if (coinsLabel != null)
             LevelController.current.updateCoins();
+        
+        string input = PlayerPrefs.GetString("stats", null);
+        Dictionary<int, LevelStat> fullStats = null;
+        if (input != null && input != "{}")
+            fullStats = JsonUtility.FromJson<Dictionary<int, LevelStat>>(input);
+        if (fullStats == null || !fullStats.ContainsKey(DoorController.current.level))
+        {
+            currentStat = new LevelStat();
+            for (int i = 0; i < 3; i++)
+                currentStat.collectedFruits.Add(0);
+        }
+        else
+            currentStat = fullStats[DoorController.current.level];
+
+        runSource = gameObject.AddComponent<AudioSource>();
+        runSource.clip = runSound;
+        runSource.loop = true;
+        dieSource = gameObject.AddComponent<AudioSource>();
+        dieSource.clip = dieSound;
+        groundSource = gameObject.AddComponent<AudioSource>();
+        groundSource.clip = groundSound;
+        backgroundSource = gameObject.AddComponent<AudioSource>();
+        backgroundSource.clip = backgroundSound;
+        backgroundSource.loop = true;
+        if (SoundManager.Instance.isMusicOn())
+            backgroundSource.Play();
     }
 
     public void addHealth(int number)
@@ -84,6 +123,8 @@ public class HeroRabit : MonoBehaviour {
         }
         else if (this.health == 0)
         {
+            if (SoundManager.Instance.isSoundOn())
+                dieSource.Play();
             StartCoroutine(rabitDie());
             livesPanel.setLivesQuantity(--lives);
         }
@@ -105,7 +146,12 @@ public class HeroRabit : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (this.isDead())
+        if (SoundManager.Instance.isMusicOn() && !backgroundSource.isPlaying)
+            backgroundSource.Play();
+        else if (!SoundManager.Instance.isMusicOn() && backgroundSource.isPlaying)
+            backgroundSource.Stop();
+
+        if (this.isDead() || locked)
             return;
 
         //[-1, 1]
@@ -114,12 +160,18 @@ public class HeroRabit : MonoBehaviour {
         if (Mathf.Abs(value) > 0)
         {
             animator.SetBool("run", true);
+            if (SoundManager.Instance.isSoundOn())
+                runSource.Play();
             Vector2 vel = myBody.velocity;
             vel.x = value * speed;
             myBody.velocity = vel;
         }
         else
+        {
             animator.SetBool("run", false);
+            if (SoundManager.Instance.isSoundOn())
+                runSource.Stop();
+        }
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (value < 0 && !animator.GetBool("die"))
@@ -146,6 +198,8 @@ public class HeroRabit : MonoBehaviour {
         else
         {
             isGrounded = false;
+            if (SoundManager.Instance.isSoundOn())
+                groundSource.Play();
             this.transform.parent = null;
         }
 
