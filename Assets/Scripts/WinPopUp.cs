@@ -17,7 +17,8 @@ public class WinPopUp : MonoBehaviour {
     public UILabel coinsLabel;
     public UILabel fruitsLabel;
 
-    public Dictionary<int, LevelStat> fullStats;
+    public AudioClip winSound = null;
+    AudioSource winSource = null;
 
     // Use this for initialization
     void Start()
@@ -26,12 +27,13 @@ public class WinPopUp : MonoBehaviour {
         closeBackground.signalOnClick.AddListener(this.openMenu);
         menuButton.signalOnClick.AddListener(this.openMenu);
         repeatButton.signalOnClick.AddListener(this.repeat);
-        
+
+        winSource = gameObject.AddComponent<AudioSource>();
+        winSource.clip = winSound;
+        winSource.Play();
+
         LevelStat stat = HeroRabit.current.currentStat;
         //show statistics
-        stat.levelPassed = true;
-        if (stat.collectedFruits[0] > 0 && stat.collectedFruits[1] > 0 && stat.collectedFruits[2] > 0)
-            stat.hasAllFruits = true;
         int newCoins = LevelController.coins - PlayerPrefs.GetInt("coins", 0);
         coinsLabel.text = "+" + newCoins;
         fruitsLabel.text = LevelController.current.fruits.ToString() + "/12";
@@ -43,18 +45,31 @@ public class WinPopUp : MonoBehaviour {
             else
                 gems[i].sprite2D = gemEmpty;
         }
+
         //save statistics
+        int level = LevelController.getCurrentLevel(SceneManager.GetActiveScene().name);
         PlayerPrefs.SetInt("coins", LevelController.coins);
 
-        string input = PlayerPrefs.GetString("stats", null);
-        if (input != null)
-            fullStats = JsonUtility.FromJson<Dictionary<int, LevelStat>>(input);
-        fullStats = new Dictionary<int, LevelStat>();
+        stat.levelPassed = true;
+        if (stat.collectedFruits[0] > 0 && stat.collectedFruits[1] > 0 && stat.collectedFruits[2] > 0)
+            stat.hasAllFruits = true;
+        string input = PlayerPrefs.GetString("stats" + level, null);
+        LevelStat archStat = JsonUtility.FromJson<LevelStat>(input);
+        if (archStat != null)
+        {
+            if (archStat.hasAllFruits)
+            {
+                stat.collectedFruits = archStat.collectedFruits;
+                stat.hasAllFruits = true;
+            }
+            if (archStat.hasGems)
+                stat.hasGems = true;
+        }
 
-        fullStats[DoorController.current.level] = stat;
-
-        string output = JsonUtility.ToJson(fullStats);
-        PlayerPrefs.SetString("stats", output);
+        string output = JsonUtility.ToJson(stat);
+        PlayerPrefs.SetString("stats" + level, output);
+        Debug.Log(PlayerPrefs.GetString("stats" + 1, null));
+        Debug.Log(DoorController.current.level);
 
         HeroRabit.current.locked = true;
     }
@@ -66,6 +81,6 @@ public class WinPopUp : MonoBehaviour {
 
     void repeat()
     {
-        SceneManager.LoadScene("Level" + DoorController.current.level);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

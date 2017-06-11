@@ -1062,6 +1062,7 @@ MonoBehaviour:
   - {fileID: 1906252926}
   spriteFull: {fileID: 21300000, guid: 2ce8c79150c004ce39a7d3c7a9b69e2d, type: 3}
   spriteEmpty: {fileID: 21300000, guid: d53831f2405364d7b936a805bc85fa59, type: 3}
+  losePrefab: {fileID: 1325080743108278, guid: 064f7102e1bbb804981066ab5abfbb5e, type: 2}
 --- !u!4 &254275084 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4050920599288532, guid: 3e66d324831cdf54794ac8e85f533dc2,

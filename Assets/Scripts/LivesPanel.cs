@@ -10,10 +10,15 @@ public class LivesPanel : MonoBehaviour {
     public Sprite spriteFull;
     public Sprite spriteEmpty;
 
+    public GameObject losePrefab;
+
     public void setLivesQuantity(int lives)
     {
         if(lives == 0)
-            SceneManager.LoadScene("ChoseLevel");
+        {
+            GameObject parent = UICamera.first.transform.parent.gameObject;
+            GameObject obj = NGUITools.AddChild(parent, losePrefab);
+        }
 
         for (int i = 0; i < 3; ++i)
         {

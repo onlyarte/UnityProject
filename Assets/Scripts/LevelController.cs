@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour
@@ -50,5 +51,20 @@ public class LevelController : MonoBehaviour
     public void addGem(GemPanel.Color color)
     {
         HeroRabit.current.gemsPanel.addGem(color);
+    }
+
+    public static int getCurrentLevel(string name)
+    {
+        Regex re = new Regex(@"\d+");
+        Match m = re.Match(name);
+
+        if (m.Success)
+        {
+            return System.Int32.Parse(m.Value);
+        }
+        else
+        {
+            return -1;
+        }
     }
 }

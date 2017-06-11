@@ -1179,6 +1179,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4132a536f41a24bcba2f6f110acbb1f1, type: 3}
   coinsLabel: {fileID: 114148570552491912}
   fruitsLabel: {fileID: 114448610161900672}
+  winSound: {fileID: 8300000, guid: dee792aa118e04f4f93fb651e2693ac9, type: 3}
 --- !u!114 &114371862819779280
 MonoBehaviour:
   m_ObjectHideFlags: 1

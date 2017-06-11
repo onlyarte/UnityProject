@@ -41,7 +41,7 @@ public class HeroRabit : MonoBehaviour {
     public AudioClip groundSound = null;
     AudioSource groundSource = null;
     public AudioClip backgroundSound = null;
-    AudioSource backgroundSource = null;
+    public AudioSource backgroundSource = null;
 
     public bool locked = false;
 
@@ -60,18 +60,9 @@ public class HeroRabit : MonoBehaviour {
         if (coinsLabel != null)
             LevelController.current.updateCoins();
         
-        string input = PlayerPrefs.GetString("stats", null);
-        Dictionary<int, LevelStat> fullStats = null;
-        if (input != null && input != "{}")
-            fullStats = JsonUtility.FromJson<Dictionary<int, LevelStat>>(input);
-        if (fullStats == null || !fullStats.ContainsKey(DoorController.current.level))
-        {
-            currentStat = new LevelStat();
-            for (int i = 0; i < 3; i++)
-                currentStat.collectedFruits.Add(0);
-        }
-        else
-            currentStat = fullStats[DoorController.current.level];
+        currentStat = new LevelStat();
+        for (int i = 0; i < 3; i++)
+            currentStat.collectedFruits.Add(0);
 
         runSource = gameObject.AddComponent<AudioSource>();
         runSource.clip = runSound;
@@ -113,6 +104,8 @@ public class HeroRabit : MonoBehaviour {
 
     void onHealthChange()
     {
+        if (locked)
+            return;
         if (this.health == 1)
         {
             targetScale = Vector3.one;
@@ -125,8 +118,8 @@ public class HeroRabit : MonoBehaviour {
         {
             if (SoundManager.Instance.isSoundOn())
                 dieSource.Play();
-            StartCoroutine(rabitDie());
             livesPanel.setLivesQuantity(--lives);
+            StartCoroutine(rabitDie());
         }
     }
 
