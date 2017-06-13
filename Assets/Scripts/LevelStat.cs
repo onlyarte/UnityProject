@@ -9,4 +9,9 @@ public class LevelStat
     public bool hasAllFruits = false;
     public bool levelPassed = false;
     public List<int> collectedFruits = new List<int>();
+
+    public void setCollectedFruits(List<int> prev)
+    {
+        collectedFruits = prev;
+    }
 }

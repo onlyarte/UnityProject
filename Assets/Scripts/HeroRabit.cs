@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HeroRabit : MonoBehaviour {
 
@@ -61,8 +62,34 @@ public class HeroRabit : MonoBehaviour {
             LevelController.current.updateCoins();
         
         currentStat = new LevelStat();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 12; i++)
             currentStat.collectedFruits.Add(0);
+
+        int level = LevelController.getCurrentLevel(SceneManager.GetActiveScene().name);
+        if(level > 0)
+        {
+            /*PlayerPrefs.SetString("stats1", "");
+            PlayerPrefs.SetString("stats2", "");
+            return;*/
+            string input = PlayerPrefs.GetString("stats" + level, null);
+            LevelStat archStat = JsonUtility.FromJson<LevelStat>(input);
+
+            if (archStat != null && archStat.collectedFruits.Count == 12)
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    if (archStat.collectedFruits[i] > 0)
+                    {
+                        currentStat.collectedFruits[i] = 1;
+                        LevelController.current.fruits++;
+                    }
+                }
+                if (archStat.hasGems)
+                    currentStat.hasGems = true;
+            }
+
+            fruitsLabel.text = LevelController.current.fruits.ToString() + "/12";
+        }
 
         runSource = gameObject.AddComponent<AudioSource>();
         runSource.clip = runSound;
@@ -85,6 +112,12 @@ public class HeroRabit : MonoBehaviour {
         if (this.health > MaxHealth)
             this.health = MaxHealth;
         this.onHealthChange();
+    }
+
+    public void addLife()
+    {
+        if(lives < 3)
+            livesPanel.setLivesQuantity(++lives);
     }
 
     public void removeHealth(int number)
@@ -127,9 +160,12 @@ public class HeroRabit : MonoBehaviour {
     {
         this.myController.SetBool("die", true);
         yield return new WaitForSeconds(4);
-        this.myController.SetBool("die", false);
-        LevelController.current.onRabitDeath(this);
-        this.health = 1; onHealthChange();
+        if (lives > 0)
+        {
+            this.myController.SetBool("die", false);
+            LevelController.current.onRabitDeath(this);
+            this.health = 1; onHealthChange();
+        }
     }
 
     public bool isDead()

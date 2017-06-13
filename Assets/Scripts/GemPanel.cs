@@ -35,7 +35,7 @@ public class GemPanel : MonoBehaviour {
             map[color] = true;
             gems[map.Count - 1].sprite2D = gemColorful[(int)color];
         }
-        if (map.ContainsKey(Color.Blue) && map[Color.Blue] 
+        if (!HeroRabit.current.currentStat.hasGems && map.ContainsKey(Color.Blue) && map[Color.Blue] 
             && map.ContainsKey(Color.Green) && map[Color.Green]
             && map.ContainsKey(Color.Red) && map[Color.Red])
             HeroRabit.current.currentStat.hasGems = true;

@@ -51,19 +51,14 @@ public class WinPopUp : MonoBehaviour {
         PlayerPrefs.SetInt("coins", LevelController.coins);
 
         stat.levelPassed = true;
-        if (stat.collectedFruits[0] > 0 && stat.collectedFruits[1] > 0 && stat.collectedFruits[2] > 0)
-            stat.hasAllFruits = true;
-        string input = PlayerPrefs.GetString("stats" + level, null);
-        LevelStat archStat = JsonUtility.FromJson<LevelStat>(input);
-        if (archStat != null)
+        for(int i = 0; i < 12; i++)
         {
-            if (archStat.hasAllFruits)
+            if (stat.collectedFruits[i] == 0)
             {
-                stat.collectedFruits = archStat.collectedFruits;
-                stat.hasAllFruits = true;
+                stat.hasAllFruits = false;
+                break;
             }
-            if (archStat.hasGems)
-                stat.hasGems = true;
+            stat.hasAllFruits = true;
         }
 
         string output = JsonUtility.ToJson(stat);

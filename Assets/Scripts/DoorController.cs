@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DoorController : MonoBehaviour {
 
     public static DoorController current;
+    static int lastReached = 0;
 
     public int doorNumber = 0;
     public int level = 0;
@@ -38,9 +39,12 @@ public class DoorController : MonoBehaviour {
         {
             gem.sprite2D = gemEmpty;
             fruit.sprite2D = fruitEmpty;
+            string prevInput = PlayerPrefs.GetString("stats" + doorNumber, null);
         }
         else
         {
+            if (stats.levelPassed && doorNumber > lastReached)
+                lastReached = doorNumber;
             if (stats.hasGems)
                 gem.sprite2D = gemFull;
             else
@@ -58,6 +62,8 @@ public class DoorController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        if (doorNumber > lastReached + 1)
+            return;
         HeroRabit rabit = collider.GetComponent<HeroRabit>();
         if (rabit != null)
         {

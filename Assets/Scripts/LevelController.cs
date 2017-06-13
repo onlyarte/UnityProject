@@ -41,10 +41,12 @@ public class LevelController : MonoBehaviour
         HeroRabit.current.coinsLabel.text = s;
     }
 
-    public void addFruits(Fruit.FruitType type)
+    public void addFruits(int id)
     {
+        if (HeroRabit.current.currentStat.collectedFruits[id] > 0)
+            return;
         fruits++;
-        HeroRabit.current.currentStat.collectedFruits[(int)type]++;
+        HeroRabit.current.currentStat.collectedFruits[id]++;
         HeroRabit.current.fruitsLabel.text = fruits.ToString() + "/12";
     }
 
