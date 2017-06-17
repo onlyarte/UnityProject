@@ -37,8 +37,6 @@ public class LosePopUp : MonoBehaviour {
             else
                 gems[i].sprite2D = gemEmpty;
         }
-        //save coins
-        PlayerPrefs.SetInt("coins", LevelController.coins);
 
         HeroRabit.current.locked = true;
     }
